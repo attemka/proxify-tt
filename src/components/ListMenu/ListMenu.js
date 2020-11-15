@@ -1,18 +1,31 @@
-import React, {useState} from 'react'
-import { ListMenuItem, ListMenuWrapper, NameItem } from './styled'
+import React, { useState } from 'react'
+import { LineBreaker, ListMenuItem, ListMenuWrapper, NameItem } from './styled'
 
-export const ListMenu = () => {
-    const items = ['Start', 'Your Cart', 'Favourites', 'Your Orders']
+const MENU_ITEMS = ['Start', 'Your Cart', 'Favourites', 'Your Orders', 'LB', 'Sign Out']
+
+export const ListMenu = ({ onMenuClick }) => {
     const [selectedItem, setSelectedItem] = useState('')
 
-    console.log(selectedItem)
     return (
         <ListMenuWrapper>
             <NameItem>Artem</NameItem>
 
-            {items.map((item) => (
-                <ListMenuItem key={item} selected={selectedItem === item} onClick={() => setSelectedItem(item)}>{item}</ListMenuItem>
-            ))}
+            {MENU_ITEMS.map((item) =>
+                item === 'LB' ? (
+                    <LineBreaker />
+                ) : (
+                    <ListMenuItem
+                        key={item}
+                        selected={selectedItem === item}
+                        onClick={() => {
+                            setSelectedItem(item)
+                            onMenuClick()
+                        }}
+                    >
+                        {item}
+                    </ListMenuItem>
+                )
+            )}
         </ListMenuWrapper>
     )
 }
